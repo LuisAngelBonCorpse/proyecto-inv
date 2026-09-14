@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lili & Luis · Nuestra boda</title>
+  <meta name="description" content="Nos casamos el 5 de febrero de 2027. Acompáñanos.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital@0;1&family=Jost:wght@400;500&family=Parisienne&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="ccs/style.css">
+</head>
+
+<body>
+
+  <!-- Vid dorada que recorre todo el sitio como columna vertebral -->
+  <div class="vine-spine" aria-hidden="true">
+    <svg viewBox="0 0 40 2000" preserveAspectRatio="none">
+      <path class="vine-path"
+        d="M20,0 C5,80 35,160 20,240 C5,320 35,400 20,480 C5,560 35,640 20,720 C5,800 35,880 20,960 C5,1040 35,1120 20,1200 C5,1280 35,1360 20,1440 C5,1520 35,1600 20,1680 C5,1760 35,1840 20,2000" />
+    </svg>
+  </div>
+
+  <nav class="topnav" id="topnav">
+    <span class="mono">L&L</span>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#historia">Nuestra historia</a></li>
+      <li><a href="#galeria">Galería</a></li>
+      <li><a href="#agradecimientos">Agradecimientos</a></li>
+      <li><a href="#gran-dia">El gran día</a></li>
+      <li><a href="#regalos">Mesa de regalos</a></li>
+      <li><a href="#rsvp" class="nav-cta">¿Nos acompañas?</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="inicio">
+    <div class="hero-inner reveal">
+      <p class="eyebrow">Nuestra boda</p>
+      <h1 class="script-names">Lili <span class="amp">&amp;</span> Luis</h1>
+      <div class="rule"></div>
+      <p class="hero-date">5 de febrero de 2027</p>
+      <p class="hero-sub">La cuenta regresiva ha comenzado</p>
+
+      <div class="countdown" id="countdown" aria-live="polite">
+        <div class="countdown-unit">
+          <span class="countdown-number" id="cd-days">00</span>
+          <span class="countdown-label">Días</span>
+        </div>
+        <div class="countdown-divider">·</div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="cd-hours">00</span>
+          <span class="countdown-label">Horas</span>
+        </div>
+        <div class="countdown-divider">·</div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="cd-minutes">00</span>
+          <span class="countdown-label">Minutos</span>
+        </div>
+        <div class="countdown-divider">·</div>
+        <div class="countdown-unit">
+          <span class="countdown-number" id="cd-seconds">00</span>
+          <span class="countdown-label">Segundos</span>
+        </div>
+      </div>
+
+      <a href="#historia" class="scroll-cue" aria-label="Bajar a la siguiente sección">
+        <span></span>
+      </a>
+    </div>
+  </header>
+
+  <!-- NUESTRA HISTORIA -->
+  <section class="section section-light" id="historia">
+    <div class="section-inner">
+      <p class="eyebrow eyebrow-dark">Cómo empezó todo</p>
+      <h2 class="section-title">Nuestra historia</h2>
+
+      <div class="timeline">
+        <article class="timeline-item reveal">
+          <span class="timeline-year">2019</span>
+          <h3>Cómo nos conocimos</h3>
+          <div class="contenedor" id="contenedor0"></div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="timeline-year">2022</span>
+          <h3>El primer viaje juntos</h3>
+          <div class="contenedor" id="contenedor1"></div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="timeline-year">2023</span>
+          <h3>Y los mundos chocan</h3>
+          <div class="contenedor" id="contenedor2"></div>
+        </article>
+        <article class="timeline-item reveal">
+          <span class="timeline-year">2026</span>
+          <h3>La propuesta</h3>
+          <div class="contenedor" id="contenedor3"></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERÍA (nueva sección, justo después de Nuestra historia) -->
+  <section class="section section-dark" id="galeria">
+    <div class="section-inner">
+      <p class="eyebrow">Nuestros momentos</p>
+      <h2 class="section-title section-title-light">Galería</h2>
+      <p class="section-lead">
+        Una muestra de nuestra historia en imágenes. Desliza o usa las flechas para ver más fotos.
+      </p>
+
+      <div class="gallery-carousel">
+        <div class="gallery-track" id="galleryTrack">
+          <!-- Las fotos se leen automáticamente desde la carpeta img/galeria/. -->
+        </div>
+        <button class="gallery-arrow gallery-prev" id="galleryPrev" type="button"
+          aria-label="Página anterior">&#8249;</button>
+        <button class="gallery-arrow gallery-next" id="galleryNext" type="button"
+          aria-label="Página siguiente">&#8250;</button>
+      </div>
+      <div class="gallery-dots" id="galleryDots"></div>
+    </div>
+  </section>
+
+  <!-- LIGHTBOX de la galería -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" inert>
+    <button class="lightbox-close" id="lightboxClose" aria-label="Cerrar">&times;</button>
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="Anterior">&#8249;</button>
+    <img id="lightboxImg" src="" alt="">
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="Siguiente">&#8250;</button>
+  </div>
+
+
+  <!-- AGRADECIMIENTOS -->
+  <section class="section section-light" id="agradecimientos">
+    <div class="section-inner section-inner-narrow">
+      <p class="eyebrow eyebrow-dark">Con el corazón en la mano</p>
+      <h2 class="section-title">Agradecimientos</h2>
+      <p class="section-lead">
+        Llegar hasta aquí no hubiera sido posible sin todo un ejército de amor (y paciencia) detrás de nosotros. Gracias a nuestros padres, Ana Ángela Durán y Jorge González, y Julia Soto y Carlos Sánchez, por todas sus enseñanzas, por aguantar nuestras crisis existenciales de "¿y si mejor nos fugamos?" y por apoyarnos en cada paso de este camino que hoy nos trae hasta el altar... bueno, casi, ya casi.
+      </p><p class="section-lead">
+        A nuestras damas, Mariana Tolentino, Ana Durán, Marisol, Diana, Zury y Ari: gracias por ser esas amigas que nos escuchan, nos aconsejan y nos van a acompañar en las buenas, en las malas y en los ataques de nervios pre-boda que seguro vienen en camino. Sabemos que ser dama conlleva ciertos riesgos (como que les pidamos opinión sobre flores a las 11pm), y aun así siguen aquí.
+      </p><p class="section-lead">
+        Y a nuestros padrinos, Jorge Durán, Marco Vázquez, Giovanni, Javier, Sergio y Santi: gracias por ser esos cómplices incondicionales que nos han acompañado en la vida y que pronto nos honrarán acompañándonos también en este día tan especial. Su cariño y su presencia serán parte fundamental de esta historia.
+      </p><p class="section-lead">
+        A todos: gracias por ser parte de nuestra historia, por celebrar pronto con nosotros y por hacer que este día se sienta ya tan especial incluso antes de llegar. Los queremos con todo el corazón.
+      </p>
+    </div>
+  </section>
+
+  <!-- EL GRAN DÍA -->
+  <section class="section section-dark" id="gran-dia">
+    <div class="section-inner">
+      <p class="eyebrow">El itinerario</p>
+      <h2 class="section-title section-title-light">El gran día</h2>
+
+      <div class="schedule">
+        <div class="schedule-item reveal">
+          <span class="schedule-time">16:00</span>
+          <div>
+            <h3>Ceremonia religiosa</h3>
+            <p>Nombre del lugar · Dirección de ejemplo, Ciudad</p>
+          </div>
+        </div>
+        <div class="schedule-item reveal">
+          <span class="schedule-time">18:00</span>
+          <div>
+            <h3>Cóctel de bienvenida</h3>
+            <p>Nombre del salón · Dirección de ejemplo, Ciudad</p>
+          </div>
+        </div>
+        <div class="schedule-item reveal">
+          <span class="schedule-time">19:30</span>
+          <div>
+            <h3>Recepción y cena</h3>
+            <p>Nombre del salón · Dirección de ejemplo, Ciudad</p>
+          </div>
+        </div>
+        <div class="schedule-item reveal">
+          <span class="schedule-time">21:00</span>
+          <div>
+            <h3>Baile y fiesta</h3>
+            <p>Hasta que el cuerpo aguante</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MESA DE REGALOS -->
+  <section class="section section-light" id="regalos">
+    <div class="section-inner section-inner-narrow">
+      <p class="eyebrow eyebrow-dark">Su presencia es nuestro mejor regalo</p>
+      <h2 class="section-title">Mesa de regalos</h2>
+      <p class="section-lead">
+        Si además desean tener un detalle con nosotros, dejamos un par de opciones.
+      </p>
+
+      <div class="gift-cards">
+        <div class="gift-card">
+          <h3>Amazon</h3>
+          <p><a href="https://www.amazon.com.mx/wedding/guest-view/1SE4OQL3RHQKJ" target="_blank" rel="noopener"
+              class="btn-link">Ver lista de regalos</a></p>
+        </div>
+        <div class="gift-card">
+          <h3>Fisico</h3>
+          <p>Si prefieres un regalo tangible, tambien puedes llevar un presente físico.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RSVP -->
+  <section class="section section-dark" id="rsvp">
+    <div class="section-inner section-inner-narrow">
+      <p class="eyebrow">Confírmanos</p>
+      <h2 class="section-title section-title-light">¿Nos acompañas?</h2>
+      <p class="section-lead">
+        Agradecemos confirmar tu asistencia antes del 5 de enero de 2027.
+      </p>
+
+      <!--
+      NOTA PARA QUIEN EDITE ESTE ARCHIVO:
+      Este formulario es solo de interfaz (front-end). Para que las respuestas
+      se guarden en algún lado, conéctalo a un servicio gratuito como:
+      - Formspree (https://formspree.io) → cambia el atributo "action" de abajo
+      - Google Forms embebido
+      - Web3Forms (https://web3forms.com)
+      Mientras tanto, el JS solo muestra un mensaje de confirmación en pantalla.
+    -->
+      <form class="rsvp-form" id="rsvpForm" action="#" method="POST">
+        <div class="form-row">
+          <label for="nombre">Nombre</label>
+          <select id="nombre" required>
+            <option value="" disabled selected>Selecciona tu nombre de la lista</option>
+          </select>
+          <!-- Estos campos ocultos son los que en realidad se envían con el
+             formulario; el <select> de arriba es solo para mostrar/elegir. -->
+          <input type="hidden" id="nombreHidden" name="nombre" value="">
+          <input type="hidden" id="invitadoId" name="invitado_id" value="">
+          <p class="field-note" id="nombreNote"></p>
+        </div>
+
+        <div class="form-row">
+          <label>¿Asistirás?</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="asistencia" value="si" required> Sí, ahí estaré
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="asistencia" value="no" required> No podré asistir
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label for="acompanantes">Número de acompañantes</label>
+          <input type="number" id="acompanantes" name="acompanantes" min="0" max="0" value="0" readonly>
+          <p class="field-note" id="acompanantesNote">Selecciona tu nombre para ver cuántos acompañantes puedes traer.
+          </p>
+        </div>
+
+        <div class="form-row">
+          <label for="mensaje">Mensaje para los novios (opcional)</label>
+          <textarea id="mensaje" name="mensaje" rows="3"
+            placeholder="Comparte que piensas o que canción no podria faltar..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit">Enviar confirmación</button>
+        <p class="form-feedback" id="formFeedback" role="status"></p>
+      </form>
+      <!-- Este bloque aparece SOLO cuando alguien confirma "Sí, ahí estaré". -->
+      <div class="album-reveal" id="albumReveal" hidden>
+        <div class="rule"></div>
+        <p class="album-title">¡Nos encanta que nos acompañes!</p>
+        <p class="album-text">
+          Escanea este código o abre el enlace para ver y compartir las fotos del día en nuestro álbum.
+        </p>
+        <div class="album-qr-card">
+          <img src="img/Untitled_01_04_46.png" alt="Código QR del álbum de fotos compartido" class="album-qr">
+        </div>
+        <!-- ACTUALIZA ESTE ENLACE con la URL real de su álbum (Google Fotos, iCloud, etc.) -->
+        <a href="https://photos.app.goo.gl/3zdN5vwmroQS6teLA" id="albumLink" class="album-link" target="_blank" rel="noopener">Abrir álbum de fotos</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p class="script-names footer-names">Lili <span class="amp">&amp;</span> Luis</p>
+    <p class="footer-text">Gracias por ser parte de nuestra historia.</p>
+    <p class="footer-text">&copy; 2027 Lili & Luis. Todos los derechos reservados.</p>
+    <p class="sitatyr">Los trabajadores de la televisión y la radio llevaremos acabo a nuestra sexagésima octava
+      asamblea general ordinaria del concejo nacional en Quintana Roo, inaugurando los trabajos del gobernador del
+      estado, con el respaldo de la confederación de trabajadores de México, avanzamos para un mejor futuro
+      comprometidos contigo, por una superación social.</p>
+    <p class="sitatyr">SITATYR C T M</p>
+  </footer>
+
+  <script src="js/gallery-photos.js"></script>
+  <script src="js/guests.js"></script>
+
+  <!-- Reproductor de música en forma de tocadiscos -->
+  <div class="music-player">
+    <audio id="bgAudio" src="audio/nuestras_canciones.mp3" loop preload="none"></audio>
+    <button class="record-btn" id="recordBtn" type="button" aria-label="Reproducir nuestra canción" aria-pressed="false"
+      title="Nuestra canción">
+      <span class="tonearm" aria-hidden="true"></span>
+      <span class="record" ari a-hidden="true">
+        <span class="record-label">L&amp;L</span>
+      </span>
+    </button>
+  </div>
+
+  <script src="js/script.js"></script>
+</body>
+
+</html>
