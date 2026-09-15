@@ -354,17 +354,33 @@
       - Google Forms embebido
       - Web3Forms (https://web3forms.com)
       Mientras tanto, el JS solo muestra un mensaje de confirmación en pantalla.
-    -->
-      <form class="rsvp-form" id="rsvpForm" action="#" method="POST">
+    
+  <form
+    action="https://formspree.io/f/xjyvnzwr"
+    method="POST"
+  >
+    <label>
+      Your email:
+      <input type="email" name="email">
+    </label>
+    <label>
+      Your message:
+      <textarea name="message"></textarea>
+    </label>
+  <button type="submit">Send</button>
+  </form>
+  -->
+      <form class="rsvp-form" id="rsvpForm" action="https://formspree.io/f/xjyvnzwr" method="POST">
         <div class="form-row">
-          <label for="nombre">Nombre</label>
-          <select id="nombre" required>
-            <option value="" disabled selected>Selecciona tu nombre de la lista</option>
-          </select>
-          <!-- Estos campos ocultos son los que en realidad se envían con el
+          <label for="nombre">Nombre
+            <select id="nombre" required>
+              <option value="" disabled selected>Selecciona tu nombre de la lista</option>
+            </select>
+            <!-- Estos campos ocultos son los que en realidad se envían con el
              formulario; el <select> de arriba es solo para mostrar/elegir. -->
-          <input type="hidden" id="nombreHidden" name="nombre" value="">
-          <input type="hidden" id="invitadoId" name="invitado_id" value="">
+            <input type="hidden" id="nombreHidden" name="nombre" value="">
+            <input type="hidden" id="invitadoId" name="invitado_id" value="">
+          </label>
           <p class="field-note" id="nombreNote"></p>
         </div>
 
@@ -381,16 +397,18 @@
         </div>
 
         <div class="form-row">
-          <label for="acompanantes">Número de acompañantes</label>
-          <input type="number" id="acompanantes" name="acompanantes" min="0" max="0" value="0" readonly>
+          <label for="acompanantes">Número de acompañantes
+            <input type="number" id="acompanantes" name="acompanantes" min="0" max="0" value="0" readonly>
+          </label>
           <p class="field-note" id="acompanantesNote">Selecciona tu nombre para ver cuántos acompañantes puedes traer.
           </p>
         </div>
 
         <div class="form-row">
-          <label for="mensaje">Mensaje para los novios (opcional)</label>
-          <textarea id="mensaje" name="mensaje" rows="3"
-            placeholder="Comparte que piensas o que canción no podria faltar..."></textarea>
+          <label for="mensaje">Mensaje para los novios (opcional)
+            <textarea id="mensaje" name="mensaje" rows="3"
+              placeholder="Comparte que piensas o que canción no podria faltar..."></textarea>
+          </label>
         </div>
 
         <button type="submit" class="btn-submit">Enviar confirmación</button>
