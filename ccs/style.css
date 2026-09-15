@@ -423,34 +423,26 @@ a {
 .gallery-carousel {
   position: relative;
 }
-
 .gallery-track {
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-  /* Firefox */
-  -ms-overflow-style: none;
-  /* IE/Edge viejo */
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* IE/Edge viejo */
 }
-
 .gallery-track::-webkit-scrollbar {
-  display: none;
-  /* Chrome/Safari */
+  display: none;              /* Chrome/Safari */
 }
-
 .gallery-track .gallery {
   flex: 0 0 100%;
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
-
 .gallery {
   display: block;
 }
-
 .gallery-item {
   display: block;
   width: 100%;
@@ -462,20 +454,58 @@ a {
   border-radius: 3px;
   aspect-ratio: 16 / 10;
 }
-
 .gallery-item img {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease, filter 0.5s ease;
   filter: grayscale(0.1) sepia(0.08);
 }
+.gallery-item:hover img { transform: scale(1.05); filter: none; }
 
-.gallery-item:hover img {
-  transform: scale(1.05);
-  filter: none;
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: rgba(15, 20, 16, 0.55);
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold);
+  font-size: 1.6rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 3;
+  transition: background 0.2s ease, opacity 0.2s ease;
 }
+.gallery-arrow:hover { background: rgba(198, 162, 76, 0.25); }
+.gallery-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+.gallery-prev { left: -14px; }
+.gallery-next { right: -14px; }
 
+.gallery-dots {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.75rem;
+}
+.gallery-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--color-line);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.25s ease, background 0.25s ease;
+}
+.gallery-dot.is-active {
+  background: var(--color-gold);
+  width: 22px;
+  border-radius: 4px;
+}
 
 .lightbox {
   position: fixed;
@@ -570,7 +600,7 @@ a {
 .map-embed {
   position: relative;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 7 / 9;
   border-radius: 6px;
   overflow: hidden;
   border: 1px solid var(--color-line);
@@ -583,12 +613,6 @@ a {
   inset: 0;
   width: 100%;
   height: 100%;
-}
-
-@media (max-width: 480px) {
-  .map-embed {
-    aspect-ratio: 3 / 4;
-  }
 }
 
 /* ---------- Formulario RSVP ---------- */
