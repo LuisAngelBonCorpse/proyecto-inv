@@ -142,10 +142,19 @@ function buildGalleryPages(galleryPhotos) {
     btn.dataset.index = String(p);
 
     const img = document.createElement('img');
-    img.src = photo.src;
     img.alt = photo.alt;
-    img.loading = p === 0 ? 'eager' : 'lazy';
     img.decoding = 'async';
+
+    // Las primeras 2 fotos se cargan de inmediato; el resto se guarda en
+    // data-src y se carga "justo a tiempo" desde initGalleryCarousel().
+    // (loading="lazy" no sirve aquí: el carrusel se mueve con transform,
+    // no con scroll real, y el navegador nunca detecta que esas fotos
+    // "entraron" en pantalla).
+    if (p < 2) {
+      img.src = photo.src;
+    } else {
+      img.dataset.src = photo.src;
+    }
 
     btn.appendChild(img);
     page.appendChild(btn);
@@ -164,7 +173,6 @@ function initGalleryCarousel(totalPages) {
   const dotsWrap = document.getElementById('galleryDots');
   if (!track || !prevBtn || !nextBtn) return;
 
-  // Con una sola página no hace falta mostrar controles de navegación.
   if (totalPages <= 1) {
     prevBtn.hidden = true;
     nextBtn.hidden = true;
@@ -183,8 +191,25 @@ function initGalleryCarousel(totalPages) {
   }
   const dots = Array.from(dotsWrap.children);
 
+  // Carga la foto real de una página si todavía está pendiente
+  // (guardada en data-src), para que exista antes de que se vea.
+  function loadPageImage(index) {
+    const page = track.children[index];
+    if (!page) return;
+    const img = page.querySelector('img');
+    if (img && img.dataset.src) {
+      img.src = img.dataset.src;
+      delete img.dataset.src;
+    }
+  }
+
   function update() {
     track.style.transform = `translateX(-${current * 100}%)`;
+
+    // Precarga la página actual y sus dos vecinas.
+    loadPageImage(current - 1);
+    loadPageImage(current);
+    loadPageImage(current + 1);
 
     Array.from(track.children).forEach((page, index) => {
       const isActive = index === current;
@@ -208,7 +233,6 @@ function initGalleryCarousel(totalPages) {
   prevBtn.addEventListener('click', () => goTo(current - 1));
   nextBtn.addEventListener('click', () => goTo(current + 1));
 
-  // Deslizar con el dedo en pantallas táctiles.
   let touchStartX = null;
   track.addEventListener('touchstart', (e) => {
     touchStartX = e.touches[0].clientX;
@@ -249,7 +273,6 @@ function initGalleryLightbox() {
     lightbox.classList.add('is-open');
     lightbox.removeAttribute('aria-hidden');
     lightbox.inert = false;
-    galleryTrack?.classList.add('is-clipped');
     closeBtn.focus();
   }
 
