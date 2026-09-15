@@ -476,7 +476,7 @@ a {
   filter: none;
 }
 
-/* 
+
 .lightbox {
   position: fixed;
   inset: 0;
@@ -501,7 +501,7 @@ a {
 }
 .lightbox-prev { left: 0.5rem; }
 .lightbox-next { right: 0.5rem; }
-*/
+
 /* ---------- El gran día (schedule) ---------- */
 .schedule {
   display: flex;
