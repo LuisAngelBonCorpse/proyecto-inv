@@ -1126,3 +1126,41 @@ a {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Aviso de orientación horizontal ---------- */
+.rotate-notice {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 200;
+  background: var(--color-bg-dark);
+  color: var(--color-ink-light);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-utility);
+  font-size: 0.85rem;
+  text-align: center;
+  border-bottom: 1px solid var(--color-gold);
+}
+.rotate-notice.is-visible { display: flex; }
+.rotate-icon {
+  font-size: 1.3rem;
+  display: inline-block;
+  animation: rotate-hint 1.6s ease-in-out infinite;
+}
+@keyframes rotate-hint {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(90deg); }
+}
+.rotate-notice-close {
+  background: none;
+  border: none;
+  color: var(--color-ink-light);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+}
+.rotate-notice-close:hover { opacity: 1; }

@@ -6,6 +6,7 @@
 // =====================================================
 
 document.addEventListener('DOMContentLoaded', async () => {
+  initRotateNotice();
   initCountdown();
   initNav();
   initRevealOnScroll();
@@ -569,3 +570,28 @@ function toggleTexto(index) {
     spanBoton.textContent = 'ver menos';
   }
 } 
+
+/* ---------- Aviso de orientación horizontal ---------- */
+function initRotateNotice() {
+  const notice = document.getElementById('rotateNotice');
+  const closeBtn = document.getElementById('rotateNoticeClose');
+  if (!notice) return;
+
+  const DISMISS_KEY = 'rotateNoticeDismissed';
+
+  function checkOrientation() {
+    if (sessionStorage.getItem(DISMISS_KEY)) return;
+    const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+    const isSmallScreen = window.innerWidth <= 780;
+    notice.classList.toggle('is-visible', isPortrait && isSmallScreen);
+  }
+
+  closeBtn?.addEventListener('click', () => {
+    notice.classList.remove('is-visible');
+    sessionStorage.setItem(DISMISS_KEY, '1');
+  });
+
+  window.addEventListener('resize', checkOrientation);
+  window.addEventListener('orientationchange', checkOrientation);
+  checkOrientation();
+}
