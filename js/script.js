@@ -121,7 +121,6 @@ function initVineSpine() {
   window.addEventListener('scroll', update, { passive: true });
   window.addEventListener('resize', update);
 }
-
 /* ---------- Galería: genera una diapositiva por foto ---------- */
 function buildGalleryPages(galleryPhotos) {
   const track = document.getElementById('galleryTrack');
@@ -142,19 +141,10 @@ function buildGalleryPages(galleryPhotos) {
     btn.dataset.index = String(p);
 
     const img = document.createElement('img');
+    img.src = photo.src;
     img.alt = photo.alt;
+    img.loading = p === 0 ? 'eager' : 'lazy';
     img.decoding = 'async';
-
-    // Las primeras 2 fotos se cargan de inmediato; el resto se guarda en
-    // data-src y se carga "justo a tiempo" desde initGalleryCarousel().
-    // (loading="lazy" no sirve aquí: el carrusel se mueve con transform,
-    // no con scroll real, y el navegador nunca detecta que esas fotos
-    // "entraron" en pantalla).
-    if (p < 2) {
-      img.src = photo.src;
-    } else {
-      img.dataset.src = photo.src;
-    }
 
     btn.appendChild(img);
     page.appendChild(btn);
@@ -164,8 +154,7 @@ function buildGalleryPages(galleryPhotos) {
 
   return { pages: totalPages };
 }
-
-/* ---------- Galería: navegación del carrusel (flechas, puntos, deslizar) ---------- */
+/* ---------- Galería: navegación del carrusel (flechas, puntos, scroll nativo) ---------- */
 function initGalleryCarousel(totalPages) {
   const track = document.getElementById('galleryTrack');
   const prevBtn = document.getElementById('galleryPrev');
@@ -180,6 +169,7 @@ function initGalleryCarousel(totalPages) {
   }
 
   let current = 0;
+  const pages = Array.from(track.children);
 
   for (let i = 0; i < totalPages; i++) {
     const dot = document.createElement('button');
@@ -191,60 +181,39 @@ function initGalleryCarousel(totalPages) {
   }
   const dots = Array.from(dotsWrap.children);
 
-  // Carga la foto real de una página si todavía está pendiente
-  // (guardada en data-src), para que exista antes de que se vea.
-  function loadPageImage(index) {
-    const page = track.children[index];
-    if (!page) return;
-    const img = page.querySelector('img');
-    if (img && img.dataset.src) {
-      img.src = img.dataset.src;
-      delete img.dataset.src;
-    }
-  }
-
-  function update() {
-    track.style.transform = `translateX(-${current * 100}%)`;
-
-    // Precarga la página actual y sus dos vecinas.
-    loadPageImage(current - 1);
-    loadPageImage(current);
-    loadPageImage(current + 1);
-
-    Array.from(track.children).forEach((page, index) => {
-      const isActive = index === current;
-      page.setAttribute('aria-hidden', String(!isActive));
-      page.style.visibility = isActive ? 'visible' : 'hidden';
-      page.style.pointerEvents = isActive ? 'auto' : 'none';
-      page.style.opacity = isActive ? '1' : '0';
-      page.style.transition = 'opacity 0.35s ease, visibility 0.35s ease';
+  function setCurrent(index) {
+    current = index;
+    pages.forEach((page, i) => {
+      page.setAttribute('aria-hidden', String(i !== current));
     });
-
     dots.forEach((dot, i) => dot.classList.toggle('is-active', i === current));
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === totalPages - 1;
   }
 
   function goTo(index) {
-    current = Math.max(0, Math.min(totalPages - 1, index));
-    update();
+    const clamped = Math.max(0, Math.min(totalPages - 1, index));
+    pages[clamped].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    // setCurrent() se actualiza solo, ver el IntersectionObserver de abajo.
   }
+
+  // Detecta qué página está realmente visible, sin importar si llegaste
+  // ahí con las flechas, deslizando con el dedo o con el trackpad.
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+        const index = pages.indexOf(entry.target);
+        if (index !== -1 && index !== current) setCurrent(index);
+      }
+    });
+  }, { root: track, threshold: [0.6] });
+
+  pages.forEach((page) => observer.observe(page));
 
   prevBtn.addEventListener('click', () => goTo(current - 1));
   nextBtn.addEventListener('click', () => goTo(current + 1));
 
-  let touchStartX = null;
-  track.addEventListener('touchstart', (e) => {
-    touchStartX = e.touches[0].clientX;
-  }, { passive: true });
-  track.addEventListener('touchend', (e) => {
-    if (touchStartX === null) return;
-    const delta = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(delta) > 40) goTo(current + (delta < 0 ? 1 : -1));
-    touchStartX = null;
-  });
-
-  update();
+  setCurrent(0);
 }
 
 /* ---------- Galería: lightbox (navega entre TODAS las fotos, sin importar la página) ---------- */
@@ -457,16 +426,16 @@ function initRsvpForm() {
   const feedback = document.getElementById('formFeedback');
   const albumReveal = document.getElementById('albumReveal');
   if (!form) return;
- 
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
- 
+
     const nombre = document.getElementById('nombreHidden').value;
     if (!nombre) {
       feedback.textContent = 'Selecciona tu nombre de la lista antes de confirmar.';
       return;
     }
- 
+
     const asistenciaInput = form.querySelector('input[name="asistencia"]:checked');
     const asiste = asistenciaInput && asistenciaInput.value === 'si';
 
@@ -485,7 +454,7 @@ function initRsvpForm() {
     // ------------------------------------------------------------------
 
     feedback.textContent = `¡Gracias, ${nombre}! Tu confirmación fue registrada.`;
- 
+
     // El QR del álbum solo se revela a quienes sí van a asistir.
     if (albumReveal) {
       if (asiste) {
