@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   initGalleryCarousel(galleryInfo.pages);
   initGalleryLightbox();
   initGuestList();
+  initPadrinos();
+  initMadrinas();
   initRsvpForm();
   initMusicPlayer();
 });
@@ -383,6 +385,48 @@ function initGuestList() {
       }, 0);
     });
   }
+}
+
+/* ---------- Padrinos: pinta la lista desde js/padrinos.js ---------- */
+function initPadrinos() {
+  const list = document.getElementById('padrinosList');
+  if (!list || typeof PADRINOS === 'undefined') return;
+
+  PADRINOS.forEach((padrino) => {
+    const item = document.createElement('li');
+    item.className = 'padrino-item';
+
+    item.innerHTML = `
+      <span class="padrino-icon" aria-hidden="true">${padrino.icono}</span>
+      <span>
+        <p class="padrino-nombre">${padrino.nombre}</p>
+        <p class="padrino-rol">${padrino.rol}</p>
+      </span>
+    `;
+
+    list.appendChild(item);
+  });
+}
+
+/* ---------- Madrinas: pinta la lista desde js/madrinas.js ---------- */
+function initMadrinas() {
+  const list = document.getElementById('madrinasList');
+  if (!list || typeof MADRINA === 'undefined') return;
+
+  MADRINA.forEach((madrina) => {
+    const item = document.createElement('li');
+    item.className = 'padrino-item';
+
+    item.innerHTML = `
+      <span class="padrino-icon" aria-hidden="true">${madrina.icono}</span>
+      <span>
+        <p class="padrino-nombre">${madrina.nombre}</p>
+        <p class="padrino-rol">${madrina.rol}</p>
+      </span>
+    `;
+
+    list.appendChild(item);
+  });
 }
 
 /* ---------- Reproductor de música (tocadiscos) ---------- */

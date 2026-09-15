@@ -600,7 +600,7 @@ a {
 .map-embed {
   position: relative;
   width: 100%;
-  aspect-ratio: 7 / 9;
+  aspect-ratio: 9 / 7;
   border-radius: 6px;
   overflow: hidden;
   border: 1px solid var(--color-line);
@@ -613,6 +613,108 @@ a {
   inset: 0;
   width: 100%;
   height: 100%;
+}
+
+/* ---------- Agradecimientos: padres ---------- */
+.parents-block {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.parents-side { text-align: center; }
+.parents-label {
+  font-family: var(--font-utility);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-wine);
+  margin: 0 0 0.6rem;
+}
+.parents-names {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  line-height: 1.5;
+  margin: 0;
+}
+.parents-names .amp { color: var(--color-gold); font-size: 0.85em; padding: 0 0.1em; }
+.parents-center {
+  text-align: center;
+  max-width: 260px;
+  padding: 0 0.5rem;
+  border-left: 1px solid var(--color-line);
+  border-right: 1px solid var(--color-line);
+}
+.parents-icon {
+  display: block;
+  font-size: 1.6rem;
+  color: var(--color-gold);
+  margin-bottom: 0.75rem;
+}
+.parents-message {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  opacity: 0.9;
+  margin: 0;
+}
+
+@media (max-width: 700px) {
+  .parents-block { grid-template-columns: 1fr; }
+  .parents-center {
+    border-left: none;
+    border-right: none;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    padding: 1.5rem 0;
+    max-width: 100%;
+    order: -1;
+  }
+}
+
+/* ---------- Agradecimientos: padrinos ---------- */
+.subsection-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin: 3.5rem 0 1rem;
+}
+.section-lead-tight { margin-bottom: 2rem; }
+
+.padrinos-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  text-align: left;
+}
+.padrino-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border: 1px solid var(--color-line);
+  border-radius: 6px;
+  padding: 0.9rem 1.1rem;
+}
+.padrino-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.padrino-nombre {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin: 0;
+}
+.padrino-rol {
+  font-family: var(--font-utility);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--color-wine);
+  margin: 0.15rem 0 0;
 }
 
 /* ---------- Formulario RSVP ---------- */
@@ -833,7 +935,7 @@ a {
   }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 956px) {
   .nav-links {
     position: absolute;
     top: 100%;
