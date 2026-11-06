@@ -484,34 +484,31 @@ function initRsvpForm() {
     const asistenciaInput = form.querySelector('input[name="asistencia"]:checked');
     const asiste = asistenciaInput && asistenciaInput.value === 'si';
 
-
-    // ------------------------------------------------------------------
-    // Este bloque solo simula el envío en el navegador. Para guardar las
-    // confirmaciones de verdad, conecta el formulario a un servicio
-    // gratuito (Formspree, Web3Forms, Google Forms, etc.) y sustituye
-    // este bloque por un fetch() real hacia ese endpoint, por ejemplo:
-    //
-    // fetch(form.action, { method: 'POST', body: new FormData(form) })
-    //   .then(() => feedback.textContent = '¡Gracias por confirmar!');
-    //
-    // El FormData ya incluirá "nombre" e "invitado_id" gracias a los
-    // campos ocultos, aunque el <select> visible esté deshabilitado.
-    // ------------------------------------------------------------------
-
-    feedback.textContent = `¡Gracias, ${nombre}! Tu confirmación fue registrada.`;
-
-    // El QR del álbum solo se revela a quienes sí van a asistir.
-    if (albumReveal) {
-      if (asiste) {
-        albumReveal.hidden = false;
-        // Pequeño respiro para que la transición de aparición se note.
-        requestAnimationFrame(() => albumReveal.classList.add('is-visible'));
-      } else {
-        albumReveal.classList.remove('is-visible');
-        albumReveal.hidden = true;
-      }
-    }
-    form.reset();
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+      .then((res) => {
+        if (res.ok) {
+          feedback.textContent = `¡Gracias, ${nombre}! Tu confirmación fue registrada.`;
+          if (albumReveal) {
+            if (asiste) {
+              albumReveal.hidden = false;
+              requestAnimationFrame(() => albumReveal.classList.add('is-visible'));
+            } else {
+              albumReveal.classList.remove('is-visible');
+              albumReveal.hidden = true;
+            }
+          }
+          form.reset();
+        } else {
+          feedback.textContent = 'Hubo un problema al enviar tu confirmación. Intenta de nuevo.';
+        }
+      })
+      .catch(() => {
+        feedback.textContent = 'Hubo un problema al enviar tu confirmación. Intenta de nuevo.';
+      });
   });
 }
 
@@ -569,7 +566,7 @@ function toggleTexto(index) {
     spanTexto.textContent = textoCompleto;
     spanBoton.textContent = 'ver menos';
   }
-} 
+}
 
 /* ---------- Aviso de orientación horizontal ---------- */
 function initRotateNotice() {
