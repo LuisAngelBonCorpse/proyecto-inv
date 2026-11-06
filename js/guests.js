@@ -16,14 +16,14 @@
 // No necesitas tocar ningún otro archivo.
  
 const GUESTS = [
-  { id: "ana_y_sergio",   nombre: "Familia Luna Durán",         acompanantes: 0 },
-  { id: "mama_ana",       nombre: "Ana Angela",                 acompanantes: 1 },
-  { id: "balo_y_jaq",     nombre: "Familia Durán Sanchez",      acompanantes: 3 },
-  { id: "clau_y_marco",   nombre: "Familia Vazquez Durán",      acompanantes: 4 },
-  { id: "papa_yorch",     nombre: "Jorge Gonzales",             acompanantes: 0 },
-  { id: "papa_carlos",    nombre: "Carlos Sanchez",             acompanantes: 0 },
-  { id: "mama_julia",     nombre: "Julia Soto",                 acompanantes: 0 },
-  { id: "chopo_y_sol",    nombre: "Familia Sanchez ",           acompanantes: 2 },
+  { id: "ana_y_sergio",   nombre: "Familia Luna Durán",         acompanantes: ['Ana Durán', 'Sergio Luna'] },
+  { id: "mama_ana",       nombre: "Ana Angela",                 acompanantes: ['Ana Angela'] },
+  { id: "balo_y_jaq",     nombre: "Familia Durán Sanchez",      acompanantes: ['Jorge Durán', 'Jaqueline Sanchez','Jorge Luis', 'Rosa Maria', 'Dulce Ivvone'] },
+  { id: "clau_y_marco",   nombre: "Familia Vazquez Durán",      acompanantes: ['Claudia Durán', 'Marco Vazquez', 'Daniela', 'David', 'David'] },
+  { id: "papa_yorch",     nombre: "Jorge Gonzales",             acompanantes: ['Jorge Gonzales'] },
+  { id: "papa_carlos",    nombre: "Carlos Sanchez",             acompanantes: ['Carlos Sanchez'] },
+  { id: "mama_julia",     nombre: "Julia Soto",                 acompanantes: ['Julia Soto'] },
+  { id: "chopo_y_sol",    nombre: "Familia Sanchez ",           acompanantes: ['Carlos Sanchez', 'Marisol', 'Hailei', 'Alison'] },
 ];
  
 // -----------------------------------------------------
