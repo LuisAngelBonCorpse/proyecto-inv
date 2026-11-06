@@ -306,39 +306,42 @@ function initGuestList() {
     select.appendChild(option);
   });
 
+  // Total de boletos de la invitación actual (para blindar el campo numérico).
+  let totalActual = 0;
+
   function applyGuest(guest) {
     if (!guest) {
+      totalActual = 0;
       hiddenNombre.value = '';
       hiddenId.value = '';
       acompanantesInput.value = 0;
       acompanantesInput.max = 0;
       acompanantesInput.readOnly = true;
-      acompanantesNote.textContent = 'Selecciona tu nombre para ver cuántos acompañantes puedes traer.';
+      acompanantesNote.textContent = 'Selecciona tu nombre para ver la cantidad de boletos asignados.';
       acompanantesNote.classList.remove('is-locked');
-      return;
+      return; 
     }
 
     hiddenNombre.value = guest.nombre;
     hiddenId.value = guest.id;
 
-    if (guest.acompanantes && guest.acompanantes > 0) {
-      // Esta invitación sí tiene acompañantes asignados: se habilita el campo.
-      acompanantesInput.readOnly = false;
-      acompanantesInput.max = guest.acompanantes;
-      if (Number(acompanantesInput.value) > guest.acompanantes) {
-        acompanantesInput.value = guest.acompanantes;
-      }
-      const plural = guest.acompanantes > 1 ? 'acompañantes' : 'acompañante';
-      acompanantesNote.textContent = `Puedes traer hasta ${guest.acompanantes} ${plural}.`;
-      acompanantesNote.classList.remove('is-locked');
-    } else {
-      // Sin acompañantes asignados: se deja en 0 y bloqueado, para evitar
-      // malentendidos sobre cuántas personas puede llevar el invitado.
-      acompanantesInput.value = 0;
-      acompanantesInput.max = 0;
-      acompanantesInput.readOnly = true;
-      acompanantesNote.textContent = 'Esta invitación no incluye acompañantes.';
+    // "acompanantes" es la lista de nombres de quienes entran en esta invitación.
+    const lista = Array.isArray(guest.acompanantes) ? guest.acompanantes : [];
+    totalActual = lista.length;
+
+    // El número sale de la cantidad de nombres; el campo queda solo de lectura.
+    acompanantesInput.value = totalActual;
+    acompanantesInput.min = totalActual;
+    acompanantesInput.max = totalActual;
+    acompanantesInput.readOnly = true;
+
+    if (totalActual > 0) {
+      const etiqueta = totalActual > 1 ? 'Boletos a nombre de' : 'Boleto a nombre de';
+      acompanantesNote.textContent = `${etiqueta}: ${lista.join(', ')}.`;
       acompanantesNote.classList.add('is-locked');
+    } else {
+      acompanantesNote.textContent = 'Esta invitación no tiene boletos asignados.';
+      acompanantesNote.classList.remove('is-locked');
     }
   }
 
